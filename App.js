@@ -28,6 +28,8 @@ import IndexScreen from './src/screen/IndexScreen'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {Provider} from "../MyTestApp/src/BlogContext"
+import ShowScreen from './src/screen/ShowScreen'
+import CreateScreen from './src/screen/CreateScreen'
 const Stack = createStackNavigator(
 );
 
@@ -36,6 +38,8 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Index">
         <Stack.Screen name="Index" component={IndexScreen} />
+        <Stack.Screen name="Show" component={ShowScreen} />
+        <Stack.Screen name="Create" component={CreateScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
