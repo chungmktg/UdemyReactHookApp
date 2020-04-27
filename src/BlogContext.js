@@ -1,5 +1,6 @@
 import React,{useState, useReducer} from 'react'
 import CreateDataContext from './CreatateDataContext'
+import { act } from 'react-test-renderer'
 
 
 const blogReducer =(state, action)=> {
@@ -11,6 +12,12 @@ const blogReducer =(state, action)=> {
                 title: action.payload.title,
                 content : action.payload.content
             }]
+        case 'edit_blogpost':
+            return state.map((blogPost)=>{
+                return blogPost.id === action.payload.id
+                    ? action.payload
+                    : blogPost
+            })
         case 'delete_blogpost':
             return state.filter(blo => blo.id !== action.payload)
         default:
@@ -21,7 +28,18 @@ const blogReducer =(state, action)=> {
     const addBlogPost =(dispatch)=>{
         return (title, content, callback)=> {
             dispatch({type:'add_blogpost', payload: {title: title, content: content}})
-            callback()
+            if(callback){
+                callback()
+            }  
+        }
+    }
+
+    const editBlogPost =(dispatch)=>{
+        return (id,title, content, callback)=> {
+            dispatch({type:'edit_blogpost', payload: {id: id, title: title, content: content}})
+            if(callback){
+                callback()
+            }
         }
     }
 
@@ -31,4 +49,4 @@ const blogReducer =(state, action)=> {
         }
     }
 
-export const {Context, Provider} = CreateDataContext(blogReducer, {addBlogPost,deleteBlogPost}, [])
+export const {Context, Provider} = CreateDataContext(blogReducer, {addBlogPost,editBlogPost,deleteBlogPost}, [])
