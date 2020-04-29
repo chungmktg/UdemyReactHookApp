@@ -5,8 +5,12 @@ import { Context } from '../BlogContext'
 
 const IndexScreen = ({ navigation }) => {
 
-    const { state, deleteBlogPost } = useContext(Context)
+    const { state, deleteBlogPost,getBlogPosts } = useContext(Context)
 
+    useEffect(()=>{
+        getBlogPosts()
+    },[])
+    
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
