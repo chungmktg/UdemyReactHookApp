@@ -9,6 +9,15 @@ const IndexScreen = ({ navigation }) => {
 
     useEffect(()=>{
         getBlogPosts()
+
+        const listener = navigation.addListener('focus',()=> {
+            getBlogPosts()
+        })
+
+        return ()=>{
+            listener.remove()
+        }
+
     },[])
     
     React.useLayoutEffect(() => {
@@ -28,7 +37,7 @@ const IndexScreen = ({ navigation }) => {
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
                                 <View style={styles.row}>
-                                    <Text>{item.title}-{item.id}</Text>
+                                    <Text>{item.title}-{item.content}</Text>
                                     <TouchableOpacity
                                         onPress={() => deleteBlogPost(item.id)}
                                     >
